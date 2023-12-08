@@ -1,0 +1,33 @@
+.row-new {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 35px; /* Spasi antar foto */
+  }
+
+.team {
+  position: relative; /* Menentukan posisi relatif untuk foto */
+  width: 100%; /* Lebar foto 100% */
+  height: auto; /* Biarkan tinggi menyesuaikan proporsi */
+  max-width: 200px; /* Lebar maksimum foto */
+  transition: transform 0.3s, opacity 0.3s; /* Efek transisi untuk perubahan */
+}
+
+.team:hover {
+  opacity: 0.8; /* Mengurangi sedikit transparansi saat hover */
+  transform: scale(1.1); /* Memperbesar sedikit ukuran foto saat hover */
+}
+
+.overlay {
+  position: absolute; /* Menentukan posisi absolut untuk overlay */
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Warna overlay */
+  opacity: 0; /* Atur opasitas overlay menjadi nol saat normal */
+  transition: opacity 0.3s; /* Efek transisi untuk perubahan opasitas */
+}
+
+.team:hover .overlay {
+  opacity: 1; /* Menampilkan overlay saat hover */
+}
