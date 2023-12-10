@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import React from 'react';
-import '../css/Asset.css';
+import '../css/style.css'
 import mahasiswa1Image from '../images/mahasiswa1.png'
 import pelajarImage from '../images/pelajar.jpg'
 import mahasiswaImage from '../images/mahasiswa.jpg'

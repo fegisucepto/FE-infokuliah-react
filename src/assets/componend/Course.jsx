@@ -5,7 +5,7 @@ import Footer from './Footer';
 import ptnImage from '../images/program-ptn.png';
 import stanImage from '../images/program-stan.png';
 import soshumImage from '../images/program-soshum.png';
-import '../css/Course.css'
+import '../css/style.css'
 import { useState } from 'react';
 
 function Courser() {

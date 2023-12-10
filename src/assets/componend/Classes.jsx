@@ -1,7 +1,7 @@
 import ptnImage from '../images/program-ptn.png'
 import stanImage from '../images/program-stan.png'
 import soshumImage from '../images/program-soshum.png'
-import '../css/Classes.css'
+import '../css/style.css'
 
 export default function Classe() {
   const programsClass = [

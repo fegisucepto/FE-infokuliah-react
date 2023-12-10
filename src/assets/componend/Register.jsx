@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
-import '../css/Register.css';
+import '../css/style.css'
 
 export default function Register ()  {
   const [formData, setFormData] = useState({

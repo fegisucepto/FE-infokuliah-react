@@ -1,5 +1,5 @@
 import headerImage from '../images/women.png';
-import '../css/Heroes.css'
+import '../css/style.css'
 
 export default function Heroes() {
   return (

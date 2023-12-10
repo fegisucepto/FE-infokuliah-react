@@ -2,7 +2,7 @@
 import React from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
-import '../css/Alumni.css'
+import '../css/style.css'
 
 function Alumni() {
   const alumniData = [

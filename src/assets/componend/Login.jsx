@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
-import '../css/Login.css';
+import '../css/style.css'
 
 export default function Login  () {
   const [username, setUsername] = useState('');

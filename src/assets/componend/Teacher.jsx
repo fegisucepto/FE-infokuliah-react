@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import React from 'react';
-import '../css/Teacher.css';
+import '../css/style.css'
 
 export default function Teacher() {
   const teacherData = [

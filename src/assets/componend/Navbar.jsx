@@ -1,6 +1,6 @@
 import logoInfokuliah from '../images/InfoKuliah.png';
 import { Link } from 'react-router-dom';
-import '../css/Navbar.css';
+import '../css/style.css'
 
 export default function Navbar() {
   return (

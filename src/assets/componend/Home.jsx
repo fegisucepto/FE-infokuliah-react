@@ -3,7 +3,7 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 import Classe from './Classes';
 import Asset from './Asset'
-import '../css/Home.css'
+import '../css/style.css'
 import Teacher from './Teacher';
 import LogoUniversitas from './LogoUniversitas'
 

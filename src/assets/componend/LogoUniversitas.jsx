@@ -1,4 +1,4 @@
-import '../css/LogoUniversitas.css'
+import '../css/style.css'
 
 export default function LogoUniversitas () {
     return (
