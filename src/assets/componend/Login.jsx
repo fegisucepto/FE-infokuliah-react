@@ -1,50 +1,54 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
-import '../css/style.css'
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
-export default function Login  () {
-  const [username, setUsername] = useState('');
+export default function Login() {
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loginStatus, setLoginStatus] = useState('');
+  const navigate = useNavigate(); // Use useNavigate for navigation
 
   const handleUsernameChange = (event) => {
-    setUsername(event.target.value);
+    setEmail(event.target.value);
   };
 
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Lakukan proses autentikasi di sini (misalnya dengan API, dll.)
 
-    // Simulasi login berhasil
-    const isLoggedIn = true; // Ganti dengan logika autentikasi yang sesungguhnya
+    try {
+      const response = await fetch('http://localhost:3002/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
-    if (isLoggedIn) {
-      setLoginStatus('Login successful!');
-      // Lakukan tindakan lain setelah login berhasil di sini
-    } else {
-      setLoginStatus('Login failed. Please try again.');
+      if (response.ok) {
+        // Handle successful login
+        setLoginStatus('Login successful!');
+        navigate('/'); // Redirect to home page upon successful login
+      } else {
+        const errorResponse = await response.text();
+        console.error('Error logging in:', errorResponse);
+        setLoginStatus('Error logging in. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error logging in:', error);
+      setLoginStatus('Error logging in. Please try again later.');
     }
   };
 
   return (
-    <div className="login-container">
-      <form className="login-form" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={handleUsernameChange}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={handlePasswordChange}
-        />
+    <div>
+      <h1>Login Page</h1>
+      <form onSubmit={handleSubmit}>
+        <input type="text" placeholder="Email" value={email} onChange={handleUsernameChange} />
+        <input type="password" placeholder="Password" value={password} onChange={handlePasswordChange} />
         <button type="submit">Login</button>
       </form>
       {loginStatus && <p>{loginStatus}</p>}

@@ -130,87 +130,7 @@
   }
 
 
-  /* CLASSES */
-
-  .container-fluid {
-    padding-top: 5rem;
-    padding-bottom: 5rem;
-    background-color: #f8f9fa;
-  }
   
-  .text-center {
-    text-align: center;
-  }
-  
-  .section-title {
-    display: inline-block;
-    border-bottom: 3px solid #007bff;
-    padding-bottom: 0.5rem;
-    margin-bottom: 1.5rem;
-  }
-  
-  .card {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-  }
-  
-  .card-img-top {
-    border-radius: 0.375rem 0.375rem 0 0;
-    max-width: 100%;
-    height: auto;
-  }
-  
-  .card-title {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-    font-weight: bold;
-  }
-  
-  .card-text {
-    font-size: 1rem;
-    color: #6c757d;
-    margin-bottom: 1.5rem;
-  }
-  
-  .btn {
-    display: inline-block;
-    font-weight: 400;
-    color: #212529;
-    text-align: center;
-    vertical-align: middle;
-    user-select: none;
-    border: 1px solid transparent;
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    line-height: 1.5;
-    border-radius: 0.25rem;
-    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  }
-  
-  .btn-warning {
-    color: #ffffff;
-    background-color: #ffc107;
-    border-color: #ffc107;
-  }
-  
-  .btn-warning:hover {
-    color: #ffffff;
-    background-color: #e0a800;
-    border-color: #d39e00;
-  }
-  
-  .row-clases {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    padding: 20px;
-  }
-  
-  .card-container {
-    width: calc(25% - 40px); /* 25% untuk 4 item sejajar, dikurangi dengan gap */
-    margin: 10px; /* Spasi antar item */
-  }
 
   
 /* COURSES */
@@ -676,42 +596,6 @@ p {
 }
 
 
-/* LOGO UNIVERSITY */
-
-
-.row-new-logo {
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  gap: 35px; /* Spasi antar foto */
-}
-
-.team {
-position: relative; /* Menentukan posisi relatif untuk foto */
-width: 100%; /* Lebar foto 100% */
-height: auto; /* Biarkan tinggi menyesuaikan proporsi */
-max-width: 200px; /* Lebar maksimum foto */
-transition: transform 0.3s, opacity 0.3s; /* Efek transisi untuk perubahan */
-}
-
-.team:hover {
-opacity: 0.8; /* Mengurangi sedikit transparansi saat hover */
-transform: scale(1.1); /* Memperbesar sedikit ukuran foto saat hover */
-}
-
-.overlay {
-position: absolute; /* Menentukan posisi absolut untuk overlay */
-top: 0;
-left: 0;
-bottom: 0;
-right: 0;
-background-color: rgba(0, 0, 0, 0.5); /* Warna overlay */
-opacity: 0; /* Atur opasitas overlay menjadi nol saat normal */
-transition: opacity 0.3s; /* Efek transisi untuk perubahan opasitas */
-}
-
-.team:hover .overlay {
-opacity: 1; /* Menampilkan overlay saat hover */
-}
 
 
 /* ALUMNI */

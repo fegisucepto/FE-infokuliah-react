@@ -1,71 +1,51 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
-import '../css/style.css'
+import { useNavigate } from 'react-router-dom';
 
-export default function Register ()  {
-  const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-  });
-
+export default function Register() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [registrationStatus, setRegistrationStatus] = useState('');
+  const navigate = useNavigate();
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
   };
 
-  const handleSubmit = (event) => {
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
+  };
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Lakukan proses registrasi di sini (misalnya dengan API, dll.)
 
-    // Simulasi registrasi berhasil
-    const isRegistered = true; // Ganti dengan logika registrasi yang sesungguhnya
+    try {
+      const response = await fetch('http://localhost:3002/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
-    if (isRegistered) {
-      setRegistrationStatus('Registration successful!');
-      // Lakukan tindakan lain setelah registrasi berhasil di sini
-    } else {
-      setRegistrationStatus('Registration failed. Please try again.');
+      if (response.ok) {
+        setRegistrationStatus('Registration successful!');
+        navigate('/login');
+      } else {
+        setRegistrationStatus('Registration failed. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error registering:', error);
+      setRegistrationStatus('Error registering. Please try again later.');
     }
   };
 
   return (
-    <div className="register-container">
-      <form className="register-form" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Username"
-          name="username"
-          value={formData.username}
-          onChange={handleInputChange}
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          name="email"
-          value={formData.email}
-          onChange={handleInputChange}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          name="password"
-          value={formData.password}
-          onChange={handleInputChange}
-        />
-        <input
-          type="password"
-          placeholder="Confirm Password"
-          name="confirmPassword"
-          value={formData.confirmPassword}
-          onChange={handleInputChange}
-        />
+    <div>
+      <h1>Registration Page</h1>
+      <form onSubmit={handleSubmit}>
+        <input type="email" placeholder="Email" value={email} onChange={handleEmailChange} />
+        <input type="password" placeholder="Password" value={password} onChange={handlePasswordChange} />
         <button type="submit">Register</button>
       </form>
       {registrationStatus && <p>{registrationStatus}</p>}

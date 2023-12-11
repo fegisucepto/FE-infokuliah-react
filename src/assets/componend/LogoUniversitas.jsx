@@ -1,9 +1,9 @@
-import '../css/style.css'
+import '../css/logo.css'
 
 export default function LogoUniversitas () {
     return (
         <>
-        <div className="container-fluid pt-5">
+        <div className="container-fluid-logo pt-5">
           <div className="container pt-5 pb-5">
             <div className="text-center pb-2">
               <p className="section-title px-5">
@@ -11,7 +11,7 @@ export default function LogoUniversitas () {
               </p>
               <h2 className="text-dark font-weight-bold mb-4">Masuk PTN Favorit Kamu</h2>
             </div>
-            <div className="row-new">
+            <div className="row-new-logo">
               <div className="col-md-6 col-lg-3 text-center team mb-5">
               <div className="overlay"></div>
                 <img className="img-fluid w-100" src="https://th.bing.com/th/id/R.97518855acf45ec5563d2078f0377243?rik=K5u42nd%2bAv7hrQ&riu=http%3a%2f%2fthermalindo.com%2fwp-content%2fuploads%2f2020%2f12%2fUGM.jpg&ehk=gBovTGC%2btaw9gbVQOhjUCSzZi%2baonWQSZLFJp6S0r80%3d&risl=&pid=ImgRaw&r=0" alt="" />
