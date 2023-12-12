@@ -1,59 +1,49 @@
-// Navbar.jsx
 // eslint-disable-next-line no-unused-vars
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
 import logoInfokuliah from '../images/InfoKuliah.png';
 import '../css/style.css';
 
-export default function Navbar() {
-  const { isLoggedIn, logout } = useAuth();
+const Navbar = () => {
+  const token = localStorage.getItem('token');
+
+  const logout = () => {
+    localStorage.removeItem('token');
+    window.location.href = '/';
+  };
 
   return (
     <div className="navbar-container">
-      <div className="navbar-content">
-        <a className="navbar-brand" href="/">
+      <nav className="navbar-content">
+        <Link to="/" className="navbar-brand">
           <img src={logoInfokuliah} alt="Infokuliah.id" className="logo" />
-        </a>
-        <button type="button" className="navbar-toggler" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
-        </button>
+        </Link>
         <div className="navbar-links">
           <ul className="navbar-nav">
             <li className="nav-item">
-              <Link className="nav-link active" to="/">
-                Home
-              </Link>
+              <Link to="/" className="nav-link">Home</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/courses">
-                Paket Kursus
-              </Link>
+              <Link to="/courses" className="nav-link">Kursus</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/alumni">
-                Alumni
-              </Link>
+              <Link to="/alumni" className="nav-link">Alumni</Link>
             </li>
           </ul>
         </div>
         <div className="navbar-buttons">
-          {isLoggedIn ? (
-            <button className="btn logout-btn" onClick={logout}>
-              Logout
-            </button>
-          ) : (
+          {!token ? (
             <>
-              <Link className="btn register-btn" to="/register" role="button">
-                Register
-              </Link>
-              <Link className="btn login-btn" to="/login" role="button">
-                Login
-              </Link>
+              <Link to="/register" className="btn register-btn">Register</Link>
+              <Link to="/login" className="btn login-btn">Login</Link>
             </>
+          ) : (
+            <button className="btn logout-btn" onClick={logout}>Logout</button>
           )}
         </div>
-      </div>
+      </nav>
     </div>
   );
-}
+};
+
+export default Navbar;

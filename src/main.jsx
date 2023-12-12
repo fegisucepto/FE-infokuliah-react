@@ -7,13 +7,11 @@ import Course from './assets/componend/Course.jsx';
 import Alumni from './assets/componend/Alumni.jsx';
 import Login from './assets/componend/Login.jsx';
 import Register from './assets/componend/Register.jsx';
-import { AuthProvider } from './assets/contexts/AuthContext.jsx';
 
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>
 
     <Router>
-    <AuthProvider>
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/courses' element={<Course />} />
@@ -21,7 +19,6 @@ createRoot(document.getElementById('root')).render(
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
       </Routes>
-      </AuthProvider>
     </Router>
   </React.StrictMode>
 );

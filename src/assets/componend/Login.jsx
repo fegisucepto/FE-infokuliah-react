@@ -1,12 +1,12 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loginStatus, setLoginStatus] = useState('');
-  const navigate = useNavigate(); // Use useNavigate for navigation
+  const navigate = useNavigate();
 
   const handleUsernameChange = (event) => {
     setEmail(event.target.value);
@@ -29,7 +29,12 @@ export default function Login() {
       });
 
       if (response.ok) {
-        // Handle successful login
+        const data = await response.json();
+        const token = data.data.access_token;
+
+        // Simpan token ke local storage
+        localStorage.setItem('token', token);
+
         setLoginStatus('Login successful!');
         navigate('/'); // Redirect to home page upon successful login
       } else {
