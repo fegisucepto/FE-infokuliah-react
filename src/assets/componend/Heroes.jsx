@@ -11,7 +11,7 @@ export default function Heroes() {
             <h1 className="display-3 font-weight-bold text-white">Selangkah Lebih Dekat Dengan PTN Impianmu</h1>
             <p className="text-white mb-4">Ikuti bimbel persiapan UTBK-SBMPTN untuk mendukung kesiapanmu masuk PTN impian.</p>
             <a href="/register" className="btn btn-warning mt-1 py-3 px-5">
-              Sign Up
+              Ayo Mulai!
             </a>
           </div>
           <div className="col-lg-6 text-center text-lg-right mb-n5">

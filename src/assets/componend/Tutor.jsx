@@ -2,7 +2,7 @@
 import React from 'react';
 import '../css/style.css'
 
-export default function Teacher() {
+export default function Tutor() {
   const teacherData = [
     {
       id: 1,
@@ -61,9 +61,9 @@ export default function Teacher() {
           <div className="teacher-content">
             <div className="text-center pb-2">
               <p className="section-title px-5">
-                <span className="px-2">TEACHER TERBAIK</span>
+                <span className="px-2">TUTOR TERBAIK</span>
               </p>
-              <h2 className="text-dark font-weight-bold mb-4">GURU TERBAIK INFOKULIAH.ID</h2>
+              <h2 className="text-dark font-weight-bold mb-4">TUTOR TERBAIK INFOKULIAH.ID</h2>
             </div>
             <div className="teacher-list">
               {teacherData.map((teacher) => (

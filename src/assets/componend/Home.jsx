@@ -4,7 +4,7 @@ import Footer from './Footer';
 import Classe from './Classes';
 import Asset from './Asset'
 import '../css/style.css'
-import Teacher from './Teacher';
+import Tutor from './Tutor'
 import LogoUniversitas from './LogoUniversitas'
 
 export default function Home () {
@@ -13,7 +13,7 @@ export default function Home () {
         <Navbar />
         <Heroes />
         <Asset/>
-        <Teacher/>
+        <Tutor/>
         <LogoUniversitas/>
         <Classe />
         <Footer />
