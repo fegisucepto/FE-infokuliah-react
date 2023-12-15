@@ -6,20 +6,32 @@ import '../css/style.css';
 
 function Courser() {
   const [programs, setPrograms] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    fetch('http://localhost:3002/courses')
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.statusCode === 200 && data.data) {
-          setPrograms(data.data);
-        } else {
-          console.error('Failed to fetch programs:', data);
-        }
+    // Memeriksa apakah ada token di localStorage
+    const token = localStorage.getItem('token');
+    if (token) {
+      setIsLoggedIn(true); // Jika ada token, tandai pengguna sebagai login
+      fetch('http://localhost:3002/courses', {
+        headers: {
+          Authorization: `Bearer ${token}`, // Menambahkan token ke header Authorization
+        },
       })
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-      });
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.statusCode === 200 && data.data) {
+            setPrograms(data.data);
+          } else {
+            console.error('Failed to fetch programs:', data);
+          }
+        })
+        .catch((error) => {
+          console.error('Error fetching data:', error);
+        });
+    } else {
+      setIsLoggedIn(false); // Jika tidak ada token, tandai pengguna sebagai tidak login
+    }
   }, []);
 
   const [showFullDescription, setShowFullDescription] = useState(false);
@@ -33,7 +45,7 @@ function Courser() {
       <Navbar className="navbar" />
       <div className='section-course'>
         <div className="row-course">
-          {programs.map((program, index) => (
+          {isLoggedIn && programs.map((program, index) => (
             <div key={index} className="col-md-6 col-lg-3 text-center team mb-5">
               <div className="card border-0 bg-light shadow-sm pb-2">
                 <img className="card-img-top mb-2" src={program.imageURL} alt="" />
@@ -51,6 +63,7 @@ function Courser() {
               </div>
             </div>
           ))}
+          {!isLoggedIn && <p>Silakan login untuk melihat program kursus.</p>}
         </div>
         <Footer className="footer" />
       </div>
