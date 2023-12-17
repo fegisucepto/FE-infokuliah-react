@@ -53,7 +53,7 @@ const Navbar = () => {
                 </div>
                 {showDropdown && (
                   <div className="dropdown-content">
-                    <Link to="/profile" className="dropdown-link">Profil</Link>
+                    <Link to="/profil/${id}" className="dropdown-link">Profil</Link>
                     <Link to="/mycourses" className="dropdown-link">My Kursus</Link>
                     <Link className="dropdown-link" onClick={logout}>Log Out</Link>
                   </div>

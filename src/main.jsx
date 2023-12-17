@@ -8,6 +8,7 @@ import Alumni from './assets/componend/Alumni.jsx';
 import Login from './assets/componend/Login.jsx';
 import Register from './assets/componend/Register.jsx';
 import MyCourse from './assets/componend/MyCourse.jsx';
+import Profile from './assets/componend/Profil.jsx';
 
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -20,6 +21,7 @@ createRoot(document.getElementById('root')).render(
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='/mycourses' element={<MyCourse />} />
+        <Route path='/profil/${id}' element={<Profile />} />
       </Routes>
     </Router>
   </React.StrictMode>

@@ -1,21 +1,21 @@
-// eslint-disable-next-line no-unused-vars
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import '../css/style.css';
 
-function Courser() {
+const Courser = () => {
   const [programs, setPrograms] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userCourses, setUserCourses] = useState([]);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
   useEffect(() => {
-    // Memeriksa apakah ada token di localStorage
     const token = localStorage.getItem('token');
     if (token) {
-      setIsLoggedIn(true); // Jika ada token, tandai pengguna sebagai login
+      setIsLoggedIn(true);
       fetch('http://localhost:3002/courses', {
         headers: {
-          Authorization: `Bearer ${token}`, // Menambahkan token ke header Authorization
+          Authorization: `Bearer ${token}`,
         },
       })
         .then((response) => response.json())
@@ -29,15 +29,66 @@ function Courser() {
         .catch((error) => {
           console.error('Error fetching data:', error);
         });
+
+      fetch('http://localhost:3002/mycourses', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.statusCode === 200 && data.data) {
+            setUserCourses(data.data);
+          } else {
+            console.error('Failed to fetch user courses:', data);
+          }
+        })
+        .catch((error) => {
+          console.error('Error fetching user courses:', error);
+        });
     } else {
-      setIsLoggedIn(false); // Jika tidak ada token, tandai pengguna sebagai tidak login
+      setIsLoggedIn(false);
     }
   }, []);
+
+  const isEnrolled = (courseId) => {
+    return userCourses.some((course) => course.CourseId === courseId);
+  };
 
   const [showFullDescription, setShowFullDescription] = useState(false);
 
   const toggleDescription = () => {
     setShowFullDescription(!showFullDescription);
+  };
+
+  const showSuccessMessage = () => {
+    setShowSuccessPopup(true);
+    setTimeout(() => {
+      setShowSuccessPopup(false);
+    }, 3000);
+  };
+
+  const handleRegister = (id) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      fetch(`http://localhost:3002/courses/buy/${id}`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Failed to register for the course');
+          }
+          showSuccessMessage();
+        })
+        .catch((error) => {
+          console.error('Error registering for the course:', error);
+          // Handle error if needed
+        });
+    }
   };
 
   return (
@@ -58,17 +109,28 @@ function Courser() {
                     </button>
                   </p>
                   <h3 className="card-title">{program.price}</h3>
-                  <button className="courser-button">DAFTAR</button>
+                  <button
+                    onClick={() => handleRegister(program.id)}
+                    className={`courser-button ${isEnrolled(program.id) ? 'disabled' : ''}`}
+                    disabled={isEnrolled(program.id)}
+                  >
+                    {isEnrolled(program.id) ? 'Sudah Terdaftar' : 'DAFTAR'}
+                  </button>
                 </div>
               </div>
             </div>
           ))}
           {!isLoggedIn && <p>Silakan login untuk melihat program kursus.</p>}
         </div>
+        {showSuccessPopup && (
+          <div className="success-popup">
+            <p>Anda berhasil mendaftar kursus!</p>
+          </div>
+        )}
         <Footer className="footer" />
       </div>
     </>
   );
-}
+};
 
 export default Courser;
