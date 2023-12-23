@@ -1,13 +1,14 @@
-import { useState, useEffect } from 'react';
+// eslint-disable-next-line no-unused-vars
+import React, { useState, useEffect } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import { Link } from 'react-router-dom';
 
 export default function MyCourse() {
   const [myCourses, setMyCourses] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
-    // Fungsi untuk mengambil token dari local storage
     const token = localStorage.getItem('token');
     if (token) {
       fetch('http://localhost:3002/mycourses', {
@@ -47,6 +48,9 @@ export default function MyCourse() {
       <Navbar className="navbar" />
       <div className="container-fluid pt-5 pb-5 bg-light">
         <div className="container pt-5 pb-5">
+          {/* Tombol untuk menuju halaman /question */}
+
+
           <div className="row-clases">
             {errorMessage ? (
               <p>{errorMessage}</p>
@@ -60,6 +64,9 @@ export default function MyCourse() {
                       <p className="card-text">{courseData.Course.description}</p>
                       <p className="card-text">Rp.{courseData.Course.price}</p>
                     </div>
+                    <Link to="/question">
+            <button className="btn btn-primary">Tes Sekarang</button>
+          </Link>
                   </div>
                 </div>
               ))

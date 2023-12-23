@@ -9,6 +9,7 @@ import Login from './assets/componend/Login.jsx';
 import Register from './assets/componend/Register.jsx';
 import MyCourse from './assets/componend/MyCourse.jsx';
 import Profile from './assets/componend/Profil.jsx';
+import Question from './assets/componend/Question.jsx'
 
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -22,6 +23,7 @@ createRoot(document.getElementById('root')).render(
         <Route path='/register' element={<Register />} />
         <Route path='/mycourses' element={<MyCourse />} />
         <Route path='/profil/${id}' element={<Profile />} />
+        <Route path='/question' element={<Question />} />
       </Routes>
     </Router>
   </React.StrictMode>
