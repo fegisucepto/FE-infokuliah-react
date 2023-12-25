@@ -1,88 +1,110 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import Navbar from './Navbar';
 import Footer from './Footer';
 
-const Question = () => {
-  const [question, setQuestion] = useState('');
-  const [choices, setChoices] = useState([]);
-  const [remainingTime, setRemainingTime] = useState('');
-  const [score, setScore] = useState(null);
-  const [questionId, setQuestionId] = useState(null); // Menyimpan ID pertanyaan saat ini
+const QuestionViewer = () => {
+  const [questions, setQuestions] = useState([]);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [selectedChoice, setSelectedChoice] = useState('');
+  const [questionId, setQuestionId] = useState('');
+  const [examFinished, setExamFinished] = useState(false);
+  const [userScore, setUserScore] = useState(null);
+  const [timeLeft, setTimeLeft] = useState(900); // 15 menit = 900 detik
+  const [timerRunning, setTimerRunning] = useState(true);
 
   useEffect(() => {
-    fetchQuestion();
+    const fetchQuestions = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          console.error('Token not found');
+          return;
+        }
+
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
+
+        const response = await axios.get('http://localhost:3002/question', config);
+        setQuestions(response.data.questions);
+        if (response.data.questions.length > 0) {
+          setQuestionId(response.data.questions[0].id);
+        }
+      } catch (error) {
+        console.error('Error fetching questions:', error);
+      }
+    };
+
+    fetchQuestions();
   }, []);
 
-  const fetchQuestion = async () => {
-    try {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        console.error('Token not found');
-        return;
-      }
-
-      const response = await fetch('http://localhost:3002/question', {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-
-      const data = await response.json();
-      if (data.question && data.question.id) {
-        setQuestion(data.question.question);
-        setChoices(data.question.choices);
-        setQuestionId(data.question.id); // Setelah mendapatkan pertanyaan, set ID
-
-        const intervalId = setInterval(async () => {
-          const remainingTimeResponse = await fetch(`http://localhost:3002/question/remaining-time/${data.question.id}`, {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
-          });
-          const timeData = await remainingTimeResponse.json();
-          setRemainingTime(formatTime(timeData.remainingTime));
-
-          if (timeData.remainingTime === 0) {
-            clearInterval(intervalId);
-            await calculateScore(data.question.id); // Hitung nilai saat waktu ujian berakhir
-          }
-        }, 1000);
-
-        return () => clearInterval(intervalId);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (timerRunning && timeLeft > 0) {
+        setTimeLeft(timeLeft - 1);
       } else {
-        console.error('ID not found in question data:', data);
+        setTimerRunning(false);
+        if (!examFinished) {
+          setExamFinished(true);
+          showUserScore();
+        }
       }
-    } catch (error) {
-      console.error(error);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, [timeLeft, timerRunning, examFinished]);
+
+  const handleAnswerSelection = (choice) => {
+    setSelectedChoice(choice);
+  };
+
+  const moveToNextQuestion = async () => {
+    setCurrentQuestionIndex(currentQuestionIndex + 1);
+    setSelectedChoice('');
+    if (currentQuestionIndex < questions.length - 1) {
+      setQuestionId(questions[currentQuestionIndex + 1].id);
+      await submitAnswer(selectedChoice, questionId);
+    } else {
+      setExamFinished(true);
+      await submitAnswer(selectedChoice, questionId);
+      showUserScore();
     }
   };
 
-  const handleAnswerSelection = async (selectedChoice) => {
+  const moveToPreviousQuestion = () => {
+    setCurrentQuestionIndex(currentQuestionIndex - 1);
+    setSelectedChoice('');
+    if (currentQuestionIndex > 0) {
+      setQuestionId(questions[currentQuestionIndex - 1].id);
+    }
+  };
+
+  const submitAnswer = async (selectedChoice, questionId) => {
     try {
       const token = localStorage.getItem('token');
-      if (!token || !questionId) {
-        console.error('Token or Question ID not found');
+      if (!token || !questionId || !selectedChoice) {
+        console.error('Token, Question ID, or Selected Choice not found');
         return;
       }
 
-      await fetch('http://localhost:3002/submit-answer', {
-        method: 'POST',
+      const config = {
         headers: {
+          Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
         },
-        body: JSON.stringify({
-          questionId: questionId,
-          selectedChoice: selectedChoice
-        })
-      });
+      };
+
+      await axios.post('http://localhost:3002/submit-answer', { questionId, selectedChoice }, config);
     } catch (error) {
-      console.error('Failed to save answer:', error);
+      console.error('Failed to submit answer:', error);
     }
   };
 
-  const calculateScore = async (questionId) => {
+  const showUserScore = async () => {
     try {
       const token = localStorage.getItem('token');
       if (!token) {
@@ -90,56 +112,70 @@ const Question = () => {
         return;
       }
 
-      const response = await fetch(`http://localhost:3002/calculate-score/${questionId}`, {
+      const config = {
         headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-      const scoreData = await response.json();
-      setScore(scoreData.score);
-    } catch (error) {
-      console.error('Failed to fetch score:', error);
-    }
-  };
+          Authorization: `Bearer ${token}`,
+        },
+      };
 
-  const formatTime = (seconds) => {
-    const hours = Math.floor(seconds / 3600);
-    const minutes = Math.floor((seconds % 3600) / 60);
-    const remainingSeconds = seconds % 60;
-    return `${hours}:${minutes}:${remainingSeconds}`;
+      const response = await axios.get('http://localhost:3002/show-score', config);
+      if (response.data.userScore) {
+        setUserScore(response.data.userScore.score);
+      } else {
+        console.error('User score not found in response:', response.data);
+      }
+    } catch (error) {
+      console.error('Failed to fetch user score:', error);
+    }
   };
 
   return (
     <>
-    <Navbar/>
-    <div>
-      <h1>Ujian Persiapan Masuk Kuliah</h1>
-      {question && (
-        <div>
-          <p>{question}</p>
-          <ul>
-            {choices.map((choice, index) => (
-              <li key={index} onClick={() => handleAnswerSelection(choice)}>
-                {choice}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+      <Navbar />
       <div>
-        <h3>Waktu Tersisa:</h3>
-        <p>{remainingTime}</p>
-      </div>
-      {score !== null && (
+        {questions.length > 0 && currentQuestionIndex < questions.length && (
+          <div>
+            <p>{questions[currentQuestionIndex].question}</p>
+            <ul>
+              {questions[currentQuestionIndex].choices.map((choice, index) => (
+                <li
+                  key={index}
+                  onClick={() => handleAnswerSelection(choice)}
+                  style={{
+                    cursor: 'pointer',
+                    listStyleType: 'none',
+                    display: 'flex',
+                    alignItems: 'center',
+                  }}
+                >
+                  <input type="checkbox" checked={choice === selectedChoice} readOnly style={{ marginRight: '5px' }} />
+                  {choice}
+                </li>
+              ))}
+            </ul>
+            <button onClick={moveToPreviousQuestion} disabled={currentQuestionIndex === 0}>
+              Previous
+            </button>
+            <button onClick={moveToNextQuestion} disabled={examFinished}>
+              {currentQuestionIndex === questions.length - 1 ? 'Finish' : 'Next'}
+            </button>
+          </div>
+        )}
+        {examFinished && (
+          <div>
+            <h3>Nilai:</h3>
+            <p>{userScore}</p>
+          </div>
+        )}
         <div>
-          <h3>Nilai Anda:</h3>
-          <p>{score}</p>
+          <p>
+            Waktu Tersisa: {Math.floor(timeLeft / 60)}:{(timeLeft % 60).toString().padStart(2, '0')}
+          </p>
         </div>
-      )}
-    </div>
-    <Footer/>
+      </div>
+      <Footer />
     </>
   );
 };
 
-export default Question;
+export default QuestionViewer;
