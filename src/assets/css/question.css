@@ -1,0 +1,78 @@
+/* QuestionViewer.css */
+
+/* Container untuk soal */
+.question-container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .question-container p {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  /* Pilihan jawaban */
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .choice {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .checkbox {
+    margin-right: 10px;
+  }
+  
+  /* Tombol navigasi */
+  button {
+    padding: 10px 20px;
+    margin-right: 10px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+  }
+  
+  button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  /* Hasil dan Waktu */
+  .result {
+    margin-top: 20px;
+  }
+  
+  .timer {
+    margin-top: 60px;
+    font-size: 18px;
+  }
+  
+  /* Posisi waktu di kanan atas */
+  .top-right {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #f9f9f9;
+    padding: 10px 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .footer {
+    margin-top: 40px;
+    text-align: center;
+    color: #666;
+  }
+  

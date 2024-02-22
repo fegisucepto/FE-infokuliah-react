@@ -593,16 +593,16 @@ p {
 }
 
 /* Dropdown styling */
-.dropdown-content {
+/* .dropdown-content {
   display: ${(showDropdown ? 'block' : 'none')};
   position: absolute;
   top: 50px; /* Adjust the top position as needed */
-  right: 0;
+  /* right: 0;
   background-color: #fff;
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
-}
+} */ */
 
 .btn.logout-btn {
   position: relative;
@@ -736,3 +736,32 @@ p {
 
 
 
+
+
+
+/*nanti masukan ke testimoni */
+
+.testimoni {
+  font-style: italic;
+  color: #555;
+  overflow-y: auto; /* Membuat scroll jika konten melebihi tinggi kotak */
+  max-height: 100px; /* Atur tinggi maksimum kotak testimoni */
+}
+
+.testimoni-item {
+  text-align: center;
+  margin-bottom: 20px; /* Jarak di bagian bawah setiap kotak testimoni */
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 300px; /* Atur lebar kotak testimoni */
+  margin-right: 20px; /* Jarak di bagian kanan setiap kotak testimoni */
+}
+
+.testimoni-image {
+  width: 150px; 
+  height: 150px; 
+  border-radius: 50%; /* Untuk membuat gambar menjadi bulat */
+  object-fit: cover; /* Untuk memastikan gambar terpotong jika tidak sesuai ukuran */
+  margin-bottom: 10px;
+}
