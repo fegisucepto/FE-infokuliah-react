@@ -1,12 +1,18 @@
+import { UsersIcon } from '@heroicons/react/24/outline';
+
+function classNames(...classes) {
+  return classes.filter(Boolean).join(' ');
+}
+
 import { Fragment, useState, useEffect } from 'react';
 import { Dialog, Menu, Transition } from '@headlessui/react';
-import { Bars3Icon, BellIcon, CalendarIcon, ChartPieIcon, Cog6ToothIcon, DocumentDuplicateIcon, FolderIcon, HomeIcon, UsersIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { Bars3Icon, BellIcon, CalendarIcon, ChartPieIcon, Cog6ToothIcon, DocumentDuplicateIcon, FolderIcon, HomeIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid';
+import { useParams } from 'react-router-dom';
 
 const navigation = [
   { name: 'Dashboard', href: '/admin', icon: HomeIcon, current: true },
   { name: 'User', href: 'admin/user', icon: UsersIcon, current: false },
-  { name: 'Kursus', href: '/admin/kursus', icon: ChartPieIcon, current: false },
   { name: 'Projects', href: 'admin/projects', icon: FolderIcon, current: false },
   { name: 'Alumni', href: 'admin/alumni', icon: CalendarIcon, current: false },
   { name: 'Beasiswa', href: 'admin/projects2', icon: DocumentDuplicateIcon, current: false },
@@ -23,50 +29,31 @@ const userNavigation = [
   { name: 'Sign out', onClick: logout },
 ];
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ');
-}
+// function classNames(...classes) {
+//   return classes.filter(Boolean).join(' ')
+// }
 
-export default function Users() {
+export default function Home() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [programs, setPrograms] = useState([]);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { id } = useParams();
+  const [questionDetails, setQuestionDetails] = useState(null);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      setIsLoggedIn(true);
-      fetch('http://localhost:3002/list-users', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.statusCode === 200 && data.data) {
-            setPrograms(data.data);
-          } else {
-            console.error('Failed to fetch programs:', data);
-          }
-        })
-        .catch((error) => {
-          console.error('Error fetching data:', error);
-        });
-    } else {
-      setIsLoggedIn(false);
-    }
-  }, []);
+    const fetchQuestionDetails = async () => {
+      try {
+        const response = await fetch(`http://localhost:3002/question/${id}`);
+        const data = await response.json();
+        setQuestionDetails(data);
+      } catch (error) {
+        console.error('Error fetching question details:', error);
+      }
+    };
+
+    fetchQuestionDetails();
+  }, [id]);
 
   return (
     <>
-      {/*
-        This example requires updating your template:
-
-        ```
-        <html class="h-full bg-white">
-        <body class="h-full">
-        ```
-      */}
       <div>
         <Transition.Root show={sidebarOpen} as={Fragment}>
           <Dialog as="div" className="relative z-50 lg:hidden" onClose={setSidebarOpen}>
@@ -231,72 +218,64 @@ export default function Users() {
               </div>
             </div>
           </div>
-
-          <main className="flex flex-col pb-10 bg-slate-100">
-            <div className="flex flex-col pb-10 bg-slate-100">
-              <div className="flex flex-col justify-center px-10 py-4 w-full bg-white max-md:px-5 max-md:max-w-full">
-                <div className="flex gap-5 justify-between w-full max-md:flex-wrap max-md:max-w-full">
-                  <div className="flex flex-col whitespace-nowrap">
-                    <div className="text-2xl font-bold text-rose-700">List Users</div>
-                    <div className="text-xs leading-5 text-cyan-950">View list data users</div>
-                  </div>
-                  <div className="flex gap-2 my-auto text-base font-bold tracking-wide text-white max-md:flex-wrap max-md:max-w-full">
-                    <div className="flex flex-1 justify-center items-center text-sm tracking-normal text-zinc-500">
-                      <div className="flex overflow-hidden relative flex-col gap-5 justify-between p-2 w-full aspect-[8] fill-white stroke-[1px] stroke-neutral-200">
-                        <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/9089bc06b8be45f91737628b2be8db01dd549676021d274c5c04dd60e4868008?" className="object-cover absolute inset-0 size-full" />
-                        <div className="relative self-start mt-2">Search Users</div>
-                        <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/bec9b4c13b3df8f36b6c5bdab5526e4ee8761a7c186c03b2ca893727190d400d?" className="w-6 aspect-square" />
-                      </div>
-                    </div>
-                    <div className="flex gap-2 justify-between p-2 text-center capitalize whitespace-nowrap bg-rose-700 rounded">
-                      <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/014cb3d645970e9fbe9b39b5e8f07533fabaf6edf9e745f8be64f2f2db5e78ac?" className="w-6 aspect-square" />
-                      <div className="font-bold text-white">
-                        <a href="admin/create-users" className="text-white">
-                          Create Users
-                        </a>
-                      </div>
-                    </div>
-                  </div>
+          {/* Ganti SINI */}
+          <main className="py-10">
+            <div className="flex flex-col pb-12 bg-slate-100">
+              <div className="flex gap-5 justify-between px-9 py-4 w-full bg-white max-md:flex-wrap max-md:px-5 max-md:max-w-full">
+                <div className="flex gap-2 justify-center my-auto text-xl tracking-normal">
+                  <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/a83343516b5cc8abd28187cc949bcb690515f9dd6374aeef60121bfe129da9e0?" className="my-auto w-6 aspect-square" />
+                  <div className="flex-auto text-cyan-950">Daftar Soal</div>
+                  <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/fb65a7c3e18f0dc4ddb3adbbad61d88715e62675e81e61c8fdb041b930a207e7?" className="my-auto w-6 aspect-square" />
+                  <div className="grow font-bold text-rose-700 whitespace-nowrap">Detail Soal</div>
                 </div>
+                <div className="justify-center px-2 py-3 text-base font-bold tracking-wide text-center text-white capitalize bg-rose-700 rounded">Edit </div>
               </div>
-              <div className="flex flex-col justify-center px-10 py-4 w-full bg-white max-md:px-5 max-md:max-w-full">
-                <table className="min-w-full divide-y divide-gray-300">
-                  <thead>
-                    <tr>
-                      {/* <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900">
-                        ID
-                      </th> */}
-                      <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                        Name
-                      </th>
-                      <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                        Email
-                      </th>
-                      <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                        Role
-                      </th>
-                      <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                        Actions
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-200">
-                    {isLoggedIn &&
-                      programs.map((program) => (
-                        <tr key={program.id}>
-                          {/* <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900">{program.id}</td> */}
-                          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{[program.firstName] + ' ' + [program.lastName]}</td>
-                          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{program.email}</td>
-                          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{program.role}</td>
-                          <div className="flex gap-4 self-stretch py-2 pr-20 pl-4 max-md:pr-5">
-                            <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/3554b45e46dd5745b68ebacfec67536341404c1a3649a96150bbd8912b160342?" className="w-6 aspect-square" />
-                            <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/06f466e0897eeaff85d59946f18878dc57febb694f82e4e3b7fc4d8770603c94?" className="w-6 aspect-square" />
-                            <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/8a601eacf5f6381c790a206599f0c04b329400bdbebd2bbcf557653e4b2dfa3f?" className="w-6 aspect-square" />
-                          </div>
-                        </tr>
-                      ))}
-                  </tbody>
-                </table>
+              <div className="w-full bg-neutral-200 min-h-[1px] max-md:max-w-full" />
+              <div className="flex flex-col p-10 mx-10 mt-10 whitespace-nowrap bg-white rounded border border-solid border-[color:var(--Grayscale-Gray-4,#E0E0E0)] max-md:px-5 max-md:mr-2.5 max-md:max-w-full">
+                {questionDetails && (
+                  <>
+                    <div className="flex gap-5 justify-between max-md:flex-wrap max-md:max-w-full">
+                      <div className="flex flex-col flex-1 max-md:max-w-full">
+                        <div className="flex gap-px self-start text-sm tracking-normal leading-7">
+                          <div className="grow text-cyan-950"> Url Image</div>
+                          <div className="text-rose-500">*</div>
+                        </div>
+                        <div className="justify-center items-start py-2.5 pr-16 pl-4 text-sm tracking-normal rounded border border-solid bg-zinc-100 border-neutral-200 text-cyan-950 max-md:pr-5 max-md:max-w-full">
+                          {questionDetails.imageUrl}
+                        </div>
+                      </div>
+                      <div className="flex flex-col flex-1 max-md:max-w-full">
+                        <div className="flex gap-px self-start text-sm tracking-normal leading-7">
+                          <div className="grow text-cyan-950">Soal</div>
+                          <div className="text-rose-500">*</div>
+                        </div>
+                        <div className="justify-center items-start py-2.5 pr-16 pl-4 text-sm tracking-normal rounded border border-solid bg-zinc-100 border-neutral-200 text-cyan-950 max-md:pr-5 max-md:max-w-full">
+                          {questionDetails.question}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex gap-5 justify-between mt-10 max-md:flex-wrap max-md:max-w-full">
+                      <div className="flex flex-col flex-1 max-md:max-w-full">
+                        <div className="flex gap-px self-start text-sm tracking-normal leading-7">
+                          <div className="grow text-cyan-950"> Pilhan Jawaban</div>
+                          <div className="text-rose-500">*</div>
+                        </div>
+                        <div className="justify-center items-start py-2.5 pr-16 pl-4 text-sm tracking-normal rounded border border-solid bg-zinc-100 border-neutral-200 text-cyan-950 max-md:pr-5 max-md:max-w-full">
+                          {questionDetails.choices}
+                        </div>
+                      </div>
+                      <div className="flex flex-col flex-1 max-md:max-w-full">
+                        <div className="flex gap-px self-start text-sm tracking-normal leading-7">
+                          <div className="grow text-cyan-950">Jawaban</div>
+                          <div className="text-rose-500">*</div>
+                        </div>
+                        <div className="justify-center items-start py-2.5 pr-16 pl-4 text-sm tracking-normal rounded border border-solid bg-zinc-100 border-neutral-200 text-cyan-950 max-md:pr-5 max-md:max-w-full">
+                          {questionDetails.correctAnswer}
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           </main>

@@ -6,6 +6,8 @@ import logoInfokuliah from '../images/LogoInfokuliah.png';
 export default function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [firstName, setFirstName] = useState(''); // Add state for first name
+  const [lastName, setLastName] = useState(''); // Add state for last name
   const [registrationStatus, setRegistrationStatus] = useState('');
   const navigate = useNavigate();
 
@@ -17,6 +19,14 @@ export default function Register() {
     setPassword(event.target.value);
   };
 
+  const handleFirstNameChange = (event) => {
+    setFirstName(event.target.value);
+  };
+
+  const handleLastNameChange = (event) => {
+    setLastName(event.target.value);
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -26,7 +36,7 @@ export default function Register() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password, firstName, lastName }), // Include firstName and lastName in the request
       });
 
       if (response.ok) {
@@ -41,39 +51,52 @@ export default function Register() {
     }
   };
 
-//   return (
-//     <div>
-//       <h1>Registration Page</h1>
-//       <form onSubmit={handleSubmit}>
-//         <input type="email" placeholder="Email" value={email} onChange={handleEmailChange} />
-//         <input type="password" placeholder="Password" value={password} onChange={handlePasswordChange} />
-//         <button type="submit">Register</button>
-//       </form>
-//       {registrationStatus && <p>{registrationStatus}</p>}
-//     </div>
-//   );
-// }
-
-
-
-
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          <img
-            className="mx-auto h-10 w-auto"
-            src={logoInfokuliah}
-            alt="InfoKuliah.ID"
-          />
-          <h2 className="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            Sign Up to your account
-          </h2>
+          <img className="mx-auto h-10 w-auto" src={logoInfokuliah} alt="InfoKuliah.ID" />
+          <h2 className="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign Up to your account</h2>
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
           <div className="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
             <form className="space-y-6" action="#" method="POST" onSubmit={handleSubmit}>
+              <div>
+                <label htmlFor="firstName" className="block text-sm font-medium leading-6 text-gray-900">
+                  First Name
+                </label>
+                <div className="mt-2">
+                  <input
+                    id="firstName"
+                    name="firstName"
+                    type="text"
+                    autoComplete="given-name"
+                    required
+                    value={firstName}
+                    onChange={handleFirstNameChange}
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor="lastName" className="block text-sm font-medium leading-6 text-gray-900">
+                  Last Name
+                </label>
+                <div className="mt-2">
+                  <input
+                    id="lastName"
+                    name="lastName"
+                    type="text"
+                    autoComplete="family-name"
+                    required
+                    value={lastName}
+                    onChange={handleLastNameChange}
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
               <div>
                 <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                   Email address
@@ -112,12 +135,7 @@ export default function Register() {
 
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
-                  <input
-                    id="remember-me"
-                    name="remember-me"
-                    type="checkbox"
-                    className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                  />
+                  <input id="remember-me" name="remember-me" type="checkbox" className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" />
                   <label htmlFor="remember-me" className="ml-3 block text-sm leading-6 text-gray-900">
                     Remember me
                   </label>
@@ -125,7 +143,7 @@ export default function Register() {
 
                 <div className="text-sm leading-6">
                   <a href="/login" className="font-semibold text-indigo-600 hover:text-indigo-500">
-                  Sign in?
+                    Sign in?
                   </a>
                 </div>
               </div>
@@ -162,10 +180,7 @@ export default function Register() {
                       d="M12.0003 4.75C13.7703 4.75 15.3553 5.36002 16.6053 6.54998L20.0303 3.125C17.9502 1.19 15.2353 0 12.0003 0C7.31028 0 3.25527 2.69 1.28027 6.60998L5.27028 9.70498C6.21525 6.86002 8.87028 4.75 12.0003 4.75Z"
                       fill="#EA4335"
                     />
-                    <path
-                      d="M23.49 12.275C23.49 11.49 23.415 10.73 23.3 10H12V14.51H18.47C18.18 15.99 17.34 17.25 16.08 18.1L19.945 21.1C22.2 19.01 23.49 15.92 23.49 12.275Z"
-                      fill="#4285F4"
-                    />
+                    <path d="M23.49 12.275C23.49 11.49 23.415 10.73 23.3 10H12V14.51H18.47C18.18 15.99 17.34 17.25 16.08 18.1L19.945 21.1C22.2 19.01 23.49 15.92 23.49 12.275Z" fill="#4285F4" />
                     <path
                       d="M5.26498 14.2949C5.02498 13.5699 4.88501 12.7999 4.88501 11.9999C4.88501 11.1999 5.01998 10.4299 5.26498 9.7049L1.275 6.60986C0.46 8.22986 0 10.0599 0 11.9999C0 13.9399 0.46 15.7699 1.28 17.3899L5.26498 14.2949Z"
                       fill="#FBBC05"
@@ -204,5 +219,5 @@ export default function Register() {
         </div>
       </div>
     </>
-  )
+  );
 }

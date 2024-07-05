@@ -10,13 +10,15 @@ import { Bars3Icon, BellIcon, CalendarIcon, ChartPieIcon, Cog6ToothIcon, Documen
 import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid';
 
 const navigation = [
-  { name: 'Dashboard', href: '/admin', icon: HomeIcon, current: false },
-  { name: 'User', href: '/admin/user', icon: UsersIcon, current: false },
-  { name: 'Projects', href: '/admin/projects', icon: FolderIcon, current: false },
-  { name: 'Alumni', href: '#', icon: CalendarIcon, current: false },
-  { name: 'Beasiswa', href: '#', icon: DocumentDuplicateIcon, current: false },
-  { name: 'Artikel', href: '#', icon: ChartPieIcon, current: false },
+  { name: 'Dashboard', href: '/admin', icon: HomeIcon, current: true },
+  { name: 'User', href: 'admin/user', icon: UsersIcon, current: false },
+  { name: 'Kursus', href: '/admin/kursus', icon: ChartPieIcon, current: false },
+  { name: 'Projects', href: 'admin/projects', icon: FolderIcon, current: false },
+  { name: 'Alumni', href: 'admin/alumni', icon: CalendarIcon, current: false },
+  { name: 'Beasiswa', href: 'admin/projects2', icon: DocumentDuplicateIcon, current: false },
+  { name: 'Artikel', href: '/admin/article', icon: ChartPieIcon, current: false },
 ];
+
 const teams = [
   { id: 1, name: 'Heroicons', href: '#', initial: 'H', current: false },
   { id: 2, name: 'Tailwind Labs', href: '#', initial: 'T', current: false },

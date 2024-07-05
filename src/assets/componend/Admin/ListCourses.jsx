@@ -1,139 +1,20 @@
-// import { useState, useEffect } from 'react';
-// import Navbar from './Headers';
-// import { HomeIcon, UsersIcon, FolderIcon, CalendarIcon, DocumentDuplicateIcon, ChartPieIcon } from '@heroicons/react/24/outline';
-
-// const Courser = () => {
-//   const [programs, setPrograms] = useState([]);
-//   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-//   useEffect(() => {
-//     const token = localStorage.getItem('token');
-//     if (token) {
-//       setIsLoggedIn(true);
-//       fetch('http://localhost:3002/listquestion', {
-//         headers: {
-//           Authorization: `Bearer ${token}`,
-//         },
-//       })
-//         .then((response) => response.json())
-//         .then((data) => {
-//           if (data.statusCode === 200 && data.data) {
-//             setPrograms(data.data);
-//           } else {
-//             console.error('Failed to fetch programs:', data);
-//           }
-//         })
-//         .catch((error) => {
-//           console.error('Error fetching data:', error);
-//         });
-//     } else {
-//       setIsLoggedIn(false);
-//     }
-//   }, []);
-
-//   const navigation = [
-//     { name: 'Dashboard', href: '/admin', icon: HomeIcon, current: false },
-//     { name: 'User', href: '/admin/user', icon: UsersIcon, current: false },
-//     { name: 'Projects', href: '/admin/projects', icon: FolderIcon, current: true }, // Ganti nilai current sesuai keinginan
-//     { name: 'Alumni', href: '#', icon: CalendarIcon, current: false },
-//     { name: 'Beasiswa', href: '#', icon: DocumentDuplicateIcon, current: false },
-//     { name: 'Artikel', href: '#', icon: ChartPieIcon, current: false },
-//   ];
-
-//   return (
-//     <>
-//       <Navbar className="navbar" navigation={navigation} />
-//       <main className="py-10">
-//         <div className="px-4 sm:px-6 lg:px-8">
-//           <div className="sm:flex sm:items-center">
-//             <div className="sm:flex-auto">
-//               <h1 className="text-base font-semibold leading-6 text-gray-900">Soal</h1>
-//               <p className="mt-2 text-sm text-gray-700">A list of all the Soal.</p>
-//             </div>
-//             <div className="mt-4 sm:ml-4 sm:mt-0 sm:flex-none">
-//               <button
-//                 type="button"
-//                 className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-//               >
-//                 Import Soal
-//               </button>
-//             </div>
-//           </div>
-//           <div className="mt-8 overflow-x-auto">
-//             <table className="min-w-full divide-y divide-gray-300">
-//               <thead>
-//                 <tr>
-//                   <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900">
-//                     ID
-//                   </th>
-//                   <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-//                     Soal
-//                   </th>
-//                   <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-//                     Pilihan Jawaban
-//                   </th>
-//                   <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-//                     Jawaban
-//                   </th>
-//                   <th scope="col" className="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900">
-//                     Actions
-//                   </th>
-//                 </tr>
-//               </thead>
-//               <tbody className="divide-y divide-gray-200">
-//                 {isLoggedIn &&
-//                   programs.map((program) => (
-//                     <tr key={program.id}>
-//                       <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900">{program.id}</td>
-//                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{program.question}</td>
-//                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{[program.choices + '']}</td>
-//                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{program.correctAnswer}</td>
-//                       {/* <td className="whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium">
-//                         <a href="#" className="text-indigo-600 hover:text-indigo-900">
-//                           Edit<span className="sr-only">, {program.id}</span>
-//                         </a>
-//                       </td>
-//                       <td className="whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium">
-//                         <a href="#" className="text-indigo-600 hover:text-indigo-900">
-//                           Hapus<span className="sr-only">, {program.id}</span>
-//                         </a>
-//                       </td> */}
-//                       <div className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium">
-//                         <a href="#" className="text-indigo-600 hover:text-indigo-900">
-//                           Edit<span className="sr-only">, {program.id}</span>
-//                         </a>
-//                         <a href="#" className="text-red-600 hover:text-red-900 ml-4">
-//                           Hapus<span className="sr-only">, {program.id}</span>
-//                         </a>
-//                       </div>
-//                     </tr>
-//                   ))}
-//               </tbody>
-//             </table>
-//           </div>
-//         </div>
-//       </main>
-//       ;
-//     </>
-//   );
-// };
-
-// export default Courser;
-
 import { Fragment, useState, useEffect } from 'react';
 import { Dialog, Menu, Transition } from '@headlessui/react';
 import logoInfokuliah from '../../images/LogoInfokuliah.png';
 import { Bars3Icon, BellIcon, CalendarIcon, ChartPieIcon, Cog6ToothIcon, DocumentDuplicateIcon, FolderIcon, HomeIcon, UsersIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid';
+import { useNavigate } from 'react-router-dom';
 
 const navigation = [
-  { name: 'Dashboard', href: '/admin', icon: HomeIcon, current: false },
+  { name: 'Dashboard', href: '/admin', icon: HomeIcon, current: true },
   { name: 'User', href: 'admin/user', icon: UsersIcon, current: false },
-  { name: 'Projects', href: 'admin/projects', icon: FolderIcon, current: true },
+  { name: 'Kursus', href: '/admin/kursus', icon: ChartPieIcon, current: false },
+  { name: 'Projects', href: 'admin/projects', icon: FolderIcon, current: false },
   { name: 'Alumni', href: 'admin/alumni', icon: CalendarIcon, current: false },
-  { name: 'Beasiswa', href: '#', icon: DocumentDuplicateIcon, current: false },
-  { name: 'Artikel', href: '#', icon: ChartPieIcon, current: false },
+  { name: 'Beasiswa', href: 'admin/projects2', icon: DocumentDuplicateIcon, current: false },
+  { name: 'Artikel', href: '/admin/article', icon: ChartPieIcon, current: false },
 ];
+
 const logout = () => {
   localStorage.removeItem('token');
   window.location.href = '/';
@@ -141,8 +22,12 @@ const logout = () => {
 
 const userNavigation = [
   { name: 'Your profile', href: '/profil/${id}' },
-  { name: 'Sign out', onClick:  logout  },
+  { name: 'Sign out', onClick: logout },
 ];
+
+const shortenUrl = (originalUrl) => {
+  return originalUrl.substring(0, 35);
+};
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -152,6 +37,10 @@ export default function Courser() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [programs, setPrograms] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+  const [salesOfficeData, setSalesOfficeData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const history = useNavigate(); // Inisialisasi useHistory
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -177,6 +66,81 @@ export default function Courser() {
       setIsLoggedIn(false);
     }
   }, []);
+
+  const showSuccessMessage = () => {
+    setShowSuccessPopup(true);
+    setTimeout(() => {
+      setShowSuccessPopup(false);
+    }, 3000);
+  };
+
+  const handleHapusKursus = (id) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      fetch(`http://localhost:3002/question/delete/${id}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Failed to delete for the course');
+          }
+          showSuccessMessage();
+        })
+        .catch((error) => {
+          console.error('Error delete for the course:', error);
+          // Handle error if needed
+        });
+    }
+  };
+
+  const handleDetailKursus = (id) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      fetch(`http://localhost:3002/question/${id}`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Failed to detail for the course');
+          }
+          return response.json();
+        })
+        .then((data) => {
+          setSalesOfficeData(data);
+          setLoading(false);
+          // Pass the correct id to navigateToDetailPage
+          navigateToDetailPage(id);
+        })
+        .catch((error) => {
+          console.error('Error detail for the course:', error);
+          // Handle error if needed
+        });
+    }
+  };
+
+  const navigateToDetailPage = (id) => {
+    // Use history function to navigate
+    if (history && history.push) {
+      history.push(`/admin/projects/detail/${id}`);
+    } else {
+      console.error('Error: history object is not as expected');
+    }
+  };
+
+  useEffect(() => {
+    if (programs.length > 0) {
+      // Pass the id from the first program (you may adjust this logic based on your requirement)
+      handleDetailKursus(programs[0].id);
+    }
+  }, [programs]);
 
   return (
     <>
@@ -353,28 +317,50 @@ export default function Courser() {
             </div>
           </div>
 
-          <main className="py-10">
-            <div className="px-4 sm:px-6 lg:px-8">
-              <div className="sm:flex sm:items-center">
-                <div className="sm:flex-auto">
-                  <h1 className="text-base font-semibold leading-6 text-gray-900">Soal</h1>
-                  <p className="mt-2 text-sm text-gray-700">A list of all the Soal.</p>
-                </div>
-                <div className="mt-4 sm:ml-4 sm:mt-0 sm:flex-none">
-                  <button
-                    type="button"
-                    className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                  >
-                    Import Soal
-                  </button>
+          <main className="flex flex-col pb-10 bg-slate-100">
+            <div className="flex flex-col pb-10 bg-slate-100">
+              <div className="flex flex-col justify-center px-10 py-4 w-full bg-white max-md:px-5 max-md:max-w-full">
+                <div className="flex gap-5 justify-between w-full max-md:flex-wrap max-md:max-w-full">
+                  <div className="flex flex-col whitespace-nowrap">
+                    <div className="text-2xl font-bold text-rose-700">List Soal</div>
+                    <div className="text-xs leading-5 text-cyan-950">View list data Soal</div>
+                  </div>
+                  <div className="flex gap-2 my-auto text-base font-bold tracking-wide text-white max-md:flex-wrap max-md:max-w-full">
+                    <div className="flex flex-1 justify-center items-center text-sm tracking-normal text-zinc-500">
+                      <div className="flex overflow-hidden relative flex-col gap-5 justify-between p-2 w-full aspect-[8] fill-white stroke-[1px] stroke-neutral-200">
+                        <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/9089bc06b8be45f91737628b2be8db01dd549676021d274c5c04dd60e4868008?" className="object-cover absolute inset-0 size-full" />
+                        <div className="relative self-start mt-2">Search Soal</div>
+                        <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/bec9b4c13b3df8f36b6c5bdab5526e4ee8761a7c186c03b2ca893727190d400d?" className="w-6 aspect-square" />
+                      </div>
+                    </div>
+                    <div className="flex gap-2 justify-between p-2 text-center capitalize whitespace-nowrap bg-rose-700 rounded">
+                      <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/e05f63ec00195a0547681719d03642a72864334f41b7ee482013ca605f29eb66?" className="w-6 aspect-square" />
+                      <div className="font-bold text-white">
+                        <a href="#" className="text-white">
+                          Import Soal
+                        </a>
+                      </div>
+                    </div>
+                    {/* <div className="flex gap-2 justify-between p-2 text-center capitalize whitespace-nowrap bg-rose-700 rounded">
+                      <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/014cb3d645970e9fbe9b39b5e8f07533fabaf6edf9e745f8be64f2f2db5e78ac?" className="w-6 aspect-square" />
+                      <div className="font-bold text-white">
+                        <a href="admin/create-soal" className="text-white">
+                          Create Soal
+                        </a>
+                      </div>
+                    </div> */}
+                  </div>
                 </div>
               </div>
-              <div className="mt-8 overflow-x-auto">
+              <div className="flex flex-col justify-center px-10 py-4 w-full bg-white max-md:px-5 max-md:max-w-full">
                 <table className="min-w-full divide-y divide-gray-300">
                   <thead>
                     <tr>
-                      <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900">
+                      {/* <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900">
                         ID
+                      </th> */}
+                      <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                        Image
                       </th>
                       <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                         Soal
@@ -385,7 +371,7 @@ export default function Courser() {
                       <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                         Jawaban
                       </th>
-                      <th scope="col" className="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900">
+                      <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                         Actions
                       </th>
                     </tr>
@@ -394,7 +380,15 @@ export default function Courser() {
                     {isLoggedIn &&
                       programs.map((program) => (
                         <tr key={program.id}>
-                          <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900">{program.id}</td>
+                          {/* <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900">{program.id}</td> */}
+                          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                            {/* Pemendekan URL disini */}
+                            {link.imageURL && (
+                              <a href={link.imageURL} target="_blank" rel="noopener noreferrer">
+                                {shortenUrl(link.imageURL)}
+                              </a>
+                            )}
+                          </td>
                           <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{program.question}</td>
                           <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{[program.choices + '']}</td>
                           <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{program.correctAnswer}</td>
@@ -408,13 +402,25 @@ export default function Courser() {
                           Hapus<span className="sr-only">, {program.id}</span>
                         </a>
                       </td> */}
-                          <div className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium">
-                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                              Edit<span className="sr-only">, {program.id}</span>
-                            </a>
-                            <a href="#" className="text-red-600 hover:text-red-900 ml-4">
-                              Hapus<span className="sr-only">, {program.id}</span>
-                            </a>
+                          <div className="flex gap-4 self-stretch py-2 pr-20 pl-4 max-md:pr-5">
+                            <img
+                              loading="lazy"
+                              src="https://cdn.builder.io/api/v1/image/assets/TEMP/3554b45e46dd5745b68ebacfec67536341404c1a3649a96150bbd8912b160342?"
+                              className="w-6 aspect-square clickable-image"
+                              onClick={() => handleDetailKursus(program.id)}
+                            />
+                            <img
+                              loading="lazy"
+                              src="https://cdn.builder.io/api/v1/image/assets/TEMP/06f466e0897eeaff85d59946f18878dc57febb694f82e4e3b7fc4d8770603c94?"
+                              className="w-6 aspect-square clickable-image"
+                              onClick={() => handleEditKursus(program.id)}
+                            />
+                            <img
+                              loading="lazy"
+                              src="https://cdn.builder.io/api/v1/image/assets/TEMP/8a601eacf5f6381c790a206599f0c04b329400bdbebd2bbcf557653e4b2dfa3f?"
+                              className="w-6 aspect-square clickable-image"
+                              onClick={() => handleHapusKursus(program.id)}
+                            />
                           </div>
                         </tr>
                       ))}
@@ -422,9 +428,16 @@ export default function Courser() {
                 </table>
               </div>
             </div>
+            {showSuccessPopup && (
+              <div className="success-popup">
+                <p>Anda berhasil Hapus kursus!</p>
+              </div>
+            )}
           </main>
         </div>
       </div>
     </>
   );
 }
+
+const link = { imageURL: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80' };

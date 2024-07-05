@@ -1,18 +1,17 @@
 import { Fragment, useState, useEffect } from 'react';
 import { Dialog, Menu, Transition } from '@headlessui/react';
+import logoInfokuliah from '../../images/LogoInfokuliah.png';
 import { Bars3Icon, BellIcon, CalendarIcon, ChartPieIcon, Cog6ToothIcon, DocumentDuplicateIcon, FolderIcon, HomeIcon, UsersIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid';
 
 const navigation = [
-  { name: 'Dashboard', href: '/admin', icon: HomeIcon, current: true },
+  { name: 'Dashboard', href: '/admin', icon: HomeIcon, current: false },
   { name: 'User', href: 'admin/user', icon: UsersIcon, current: false },
-  { name: 'Kursus', href: '/admin/kursus', icon: ChartPieIcon, current: false },
-  { name: 'Projects', href: 'admin/projects', icon: FolderIcon, current: false },
+  { name: 'Projects', href: 'admin/projects', icon: FolderIcon, current: true },
   { name: 'Alumni', href: 'admin/alumni', icon: CalendarIcon, current: false },
-  { name: 'Beasiswa', href: 'admin/projects2', icon: DocumentDuplicateIcon, current: false },
-  { name: 'Artikel', href: '/admin/article', icon: ChartPieIcon, current: false },
+  { name: 'Beasiswa', href: '#', icon: DocumentDuplicateIcon, current: false },
+  { name: 'Artikel', href: '#', icon: ChartPieIcon, current: false },
 ];
-
 const logout = () => {
   localStorage.removeItem('token');
   window.location.href = '/';
@@ -27,16 +26,17 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
-export default function Users() {
+export default function Courser() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [programs, setPrograms] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
       setIsLoggedIn(true);
-      fetch('http://localhost:3002/list-users', {
+      fetch('http://localhost:3002/listquestion', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -132,7 +132,7 @@ export default function Users() {
           {/* Sidebar component, swap this element with another sidebar if you like */}
           <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 pb-4">
             <div className="flex h-16 shrink-0 items-center">
-              <img className="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company" />
+              <img className="h-8 w-auto" src={logoInfokuliah} alt="Your Company" />
             </div>
             <nav className="flex flex-1 flex-col">
               <ul role="list" className="flex flex-1 flex-col gap-y-7">
@@ -232,73 +232,51 @@ export default function Users() {
             </div>
           </div>
 
-          <main className="flex flex-col pb-10 bg-slate-100">
-            <div className="flex flex-col pb-10 bg-slate-100">
-              <div className="flex flex-col justify-center px-10 py-4 w-full bg-white max-md:px-5 max-md:max-w-full">
-                <div className="flex gap-5 justify-between w-full max-md:flex-wrap max-md:max-w-full">
-                  <div className="flex flex-col whitespace-nowrap">
-                    <div className="text-2xl font-bold text-rose-700">List Users</div>
-                    <div className="text-xs leading-5 text-cyan-950">View list data users</div>
-                  </div>
-                  <div className="flex gap-2 my-auto text-base font-bold tracking-wide text-white max-md:flex-wrap max-md:max-w-full">
-                    <div className="flex flex-1 justify-center items-center text-sm tracking-normal text-zinc-500">
-                      <div className="flex overflow-hidden relative flex-col gap-5 justify-between p-2 w-full aspect-[8] fill-white stroke-[1px] stroke-neutral-200">
-                        <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/9089bc06b8be45f91737628b2be8db01dd549676021d274c5c04dd60e4868008?" className="object-cover absolute inset-0 size-full" />
-                        <div className="relative self-start mt-2">Search Users</div>
-                        <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/bec9b4c13b3df8f36b6c5bdab5526e4ee8761a7c186c03b2ca893727190d400d?" className="w-6 aspect-square" />
-                      </div>
-                    </div>
-                    <div className="flex gap-2 justify-between p-2 text-center capitalize whitespace-nowrap bg-rose-700 rounded">
-                      <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/014cb3d645970e9fbe9b39b5e8f07533fabaf6edf9e745f8be64f2f2db5e78ac?" className="w-6 aspect-square" />
-                      <div className="font-bold text-white">
-                        <a href="admin/create-users" className="text-white">
-                          Create Users
-                        </a>
-                      </div>
-                    </div>
-                  </div>
+          <main className="py-10">
+            <div className="flex flex-col pb-12 bg-slate-100">
+              <div className="flex flex-col justify-center items-start px-10 py-6 w-full text-xl tracking-normal bg-white max-md:px-5 max-md:max-w-full">
+                <div className="flex gap-2 justify-center">
+                  <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/a83343516b5cc8abd28187cc949bcb690515f9dd6374aeef60121bfe129da9e0?" className="my-auto w-6 aspect-square" />
+                  <div className="flex-auto text-cyan-950">Soal</div>
+                  <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/0a7bcb14f2f25894e29db6b5f6eafc26ee64c1b06e561aa8c924d442d2efe57c?" className="my-auto w-6 aspect-square" />
+                  <div className="grow font-bold text-rose-700 whitespace-nowrap">Edit Soal.</div>
                 </div>
               </div>
-              <div className="flex flex-col justify-center px-10 py-4 w-full bg-white max-md:px-5 max-md:max-w-full">
-                <table className="min-w-full divide-y divide-gray-300">
-                  <thead>
-                    <tr>
-                      {/* <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900">
-                        ID
-                      </th> */}
-                      <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                        Name
-                      </th>
-                      <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                        Email
-                      </th>
-                      <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                        Role
-                      </th>
-                      <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                        Actions
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-200">
-                    {isLoggedIn &&
-                      programs.map((program) => (
-                        <tr key={program.id}>
-                          {/* <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900">{program.id}</td> */}
-                          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{[program.firstName] + ' ' + [program.lastName]}</td>
-                          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{program.email}</td>
-                          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{program.role}</td>
-                          <div className="flex gap-4 self-stretch py-2 pr-20 pl-4 max-md:pr-5">
-                            <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/3554b45e46dd5745b68ebacfec67536341404c1a3649a96150bbd8912b160342?" className="w-6 aspect-square" />
-                            <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/06f466e0897eeaff85d59946f18878dc57febb694f82e4e3b7fc4d8770603c94?" className="w-6 aspect-square" />
-                            <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/8a601eacf5f6381c790a206599f0c04b329400bdbebd2bbcf557653e4b2dfa3f?" className="w-6 aspect-square" />
-                          </div>
-                        </tr>
-                      ))}
-                  </tbody>
-                </table>
+              <div className="w-full bg-neutral-200 min-h-[1px] max-md:max-w-full" />
+              <div className="flex flex-col px-10 mt-10 w-full max-md:px-5 max-md:max-w-full">
+                <div className="flex flex-col items-start p-10 bg-white rounded border border-solid border-[color:var(--Grayscale-Gray-4,#E0E0E0)] max-md:px-5 max-md:max-w-full">
+                  <div className="flex gap-5 justify-between self-stretch whitespace-nowrap max-md:flex-wrap max-md:max-w-full">
+                    <div className="flex flex-col flex-1 max-md:max-w-full">
+                      <div className="flex gap-px self-start text-sm tracking-normal leading-7">
+                        <div className="grow text-cyan-950">Soal</div>
+                        <div className="text-rose-500">*</div>
+                      </div>
+                      <div className="justify-center items-start py-2.5 pr-16 pl-4 text-sm tracking-normal bg-white rounded border border-solid border-neutral-200 text-cyan-950 max-md:pr-5 max-md:max-w-full">ACL</div>
+                    </div>
+                    <div className="flex flex-col flex-1 max-md:max-w-full">
+                      <div className="flex gap-px self-start text-sm tracking-normal leading-7">
+                        <div className="grow text-cyan-950">Pilihan Jawaban</div>
+                        <div className="text-rose-500">*</div>
+                      </div>
+                      <div className="justify-center items-start py-2.5 pr-16 pl-4 text-sm tracking-normal bg-white rounded border border-solid border-neutral-200 text-cyan-950 max-md:pr-5 max-md:max-w-full">Ancol</div>
+                    </div>
+                  </div>
+                  <div className="flex gap-px mt-10 text-sm tracking-normal leading-7 whitespace-nowrap">
+                    <div className="grow text-cyan-950">Jawaban</div>
+                    <div className="text-rose-500">*</div>
+                  </div>
+                  <div className="flex gap-5 justify-between px-4 py-2.5 max-w-full text-sm tracking-normal bg-white rounded border border-solid border-neutral-200 text-cyan-950 w-[583px] max-md:flex-wrap">
+                    <div>ACL - Jakarta</div>
+                    <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/3d4a5d432bee5e28e71986bd7b3ff9cfd50db7522ff85e408f96a8661fdc8bc2?" className="w-6 aspect-square" />
+                  </div>
+                </div>
+                <div className="flex gap-4 self-end mt-10 text-base font-bold tracking-wide text-center capitalize whitespace-nowrap">
+                  <div className="grow justify-center px-14 py-2 text-rose-700 bg-white rounded border border-solid border-[color:var(--Primary-Red,#BE0028)] max-md:px-5">Back</div>
+                  <div className="grow justify-center px-14 py-2 text-white bg-rose-700 rounded max-md:px-5">Save</div>
+                </div>
               </div>
             </div>
+            ;
           </main>
         </div>
       </div>
