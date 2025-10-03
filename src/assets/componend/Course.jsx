@@ -13,7 +13,7 @@ const Courser = () => {
     const token = localStorage.getItem('token');
     if (token) {
       setIsLoggedIn(true);
-      fetch('http://localhost:3002/courses', {
+      fetch('http://localhost:3008/courses', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
