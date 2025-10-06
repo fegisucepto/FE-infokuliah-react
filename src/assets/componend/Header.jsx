@@ -253,8 +253,10 @@ import logoInfokuliah from '../images/LogoInfokuliah.png';
 const navigation = [
   { name: 'Beranda', href: '/', current: true },
   { name: 'Kursus', href: '/courses', current: false },
-  { name: 'Materi', href: '/materi', current: false },
   { name: 'Try Out', href: '/tryout', current: false },
+  { name: 'Materi', href: '/artikel', current: false },
+  { name: 'Beasiswa', href: '/beasiswa', current: false },
+  { name: 'Alumni', href: '/alumni', current: false },
   { name: 'Tentang Kami', href: '/about', current: false },
 ];
 

@@ -13,6 +13,7 @@ import Profile from './assets/componend/Profil.jsx';
 import Question from './assets/componend/Question.jsx';
 import Blogs from './assets/componend/Blogs.jsx';
 import Beasiswa from './assets/componend/Beasiswa.jsx';
+import BlogDetail from './assets/componend/BlogDetail.jsx';
 import HomeAdmin from './assets/componend/Admin/Home.jsx';
 // import HomeAdminNew from './assets/componend/Admin/HomeNewDesain.jsx';
 import HomeUSer from './assets/componend/Admin/UsersAdmin.jsx';
@@ -42,6 +43,7 @@ createRoot(document.getElementById('root')).render(
         <Route path="/profil/${id}" element={<Profile />} />
         <Route path="/question" element={<Question />} />
         <Route path="/artikel" element={<Blogs />} />
+        <Route path="/artikel/:slug" element={<BlogDetail />} />
         <Route path="/beasiswa" element={<Beasiswa />} />
         <Route path="/admin/" element={<HomeAdmin />} />
         {/* <Route path="/admin/" element={<HomeAdminNew />} /> */}

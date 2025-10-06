@@ -765,3 +765,50 @@ p {
   object-fit: cover; /* Untuk memastikan gambar terpotong jika tidak sesuai ukuran */
   margin-bottom: 10px;
 }
+
+
+
+
+/*login */
+
+/* Pastikan Anda sudah mengimpor Tailwind di sini */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 1. CSS untuk Latar Belakang (winter-background)
+  Ganti URL gambar dengan path ke gambar latar belakang Anda! 
+*/
+.winter-background {
+  /* Ganti path/to/your/winter-bg.jpg dengan lokasi gambar Anda */
+  background-image: url('https://img.pikbest.com/backgrounds/20190424/education-open-class-poster-background-template_1812030.jpg!sw800'); 
+  background-size: cover;
+  background-position: center;
+  /* Jika Anda tidak punya gambar, Anda bisa menggunakan gradien warna untuk efek ungu-biru: */
+  /* background: linear-gradient(135deg, #4b0082, #8a2be2, #4169e1); */
+}
+
+/* 2. CSS untuk Efek Glassmorphism (glass-login-form)
+  Ini yang menciptakan efek "kaca buram" yang membiaskan latar belakang.
+*/
+.glass-login-form {
+  /* Transparansi latar belakang */
+  background: rgba(255, 255, 255, 0.15); 
+  
+  /* Efek blur yang membuat terlihat seperti kaca buram */
+  backdrop-filter: blur(10px); 
+  -webkit-backdrop-filter: blur(10px); /* Untuk kompatibilitas Safari */
+  
+  /* Border tipis putih/transparan */
+  border: 1px solid rgba(255, 255, 255, 0.3); 
+}
+
+/* Optional: Untuk menyesuaikan tampilan placeholder agar lebih menyatu */
+.glass-login-form input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Optional: Untuk mengubah warna fokus input agar terlihat lebih lembut */
+.glass-login-form input:focus {
+  border-color: #ffffff; /* Warna putih saat fokus */
+}

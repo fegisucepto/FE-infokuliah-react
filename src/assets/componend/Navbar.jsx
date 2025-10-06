@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import logoInfokuliah from '../images/InfoKuliah.png';
+import logoInfokuliah from '../images/Infokuliah.png';
 import avatarImage from '../images/avatar.png'; // Ganti dengan URL foto profil
 import '../css/style.css';
 
